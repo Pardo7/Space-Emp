@@ -1,0 +1,17 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/ml-emporium-index.html",
+  "fragments": [
+    "src/ml-emporium-index.html",
+    "src/ml-view404.html"
+  ],
+  "sourceGlobs": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}
