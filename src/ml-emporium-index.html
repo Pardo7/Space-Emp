@@ -63,7 +63,7 @@
 			<!-- Main content -->
 			<iron-pages selected="[[page]]" attr-for-selected="name" fallback-selection="view404" role="main">
 				<ml-spaceships name="spaceships"></ml-spaceships>
-				<ml-spaceship-profile name="spaceship-profile" profile-page="[[activeProfile]]" route="{{subroute}}"></ml-spaceship-profile>
+				<ml-spaceship-profile name="spaceship-profile" active-profile="[[activeProfile]]" route="{{subroute}}"></ml-spaceship-profile>
 				<ml-view404 name="view404"></ml-view404>
 			</iron-pages>
 	</template>
