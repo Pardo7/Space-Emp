@@ -1,0 +1,96 @@
+<link rel="import"
+      href="../bower_components/polymer/polymer.html">
+<link rel="import"
+      href="ml-shared-styles.html">
+<link rel="import"
+      href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="ml-spaceships">
+	<style include="shared-styles">
+		.futurepanel {
+			z-index: 1;
+			position: absolute;
+			margin: auto;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			width: 95%;
+			height: 90%;
+			border-radius: 7px;
+		}
+
+		.heading {
+			text-align: center;
+		}
+
+		p {
+			margin: 4em 5em 5em 5em;
+		}
+
+		p:nth-child(odd) {
+			float: left;
+		}
+
+		p:nth-child(even) {
+			float: right;
+		}
+	</style>
+
+	<template>
+		<iron-ajax id="emporiumEndpoint"
+		           method="GET"
+		           auto
+		           url="http://demo7475333.mockable.io/spaceships"
+		           handle-as="json"
+		           on-response="handleResponse"
+		           on-error="handleError">
+		</iron-ajax>
+		<div class="futurepanel">
+			<div class="circle">
+				<h1 class="heading">Watto's Space Emporium</h1>
+				<template is="dom-repeat" items="{{spaceships}}">
+					<div class="text-container">
+						<a href$="{{item.profileUrl}}">{{item.name}}</a>
+					</div>
+				</template>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'ml-spaceships',
+			properties: {
+				spaceships: {
+					type: Array,
+					value: function() {
+						return [];
+					}
+				},
+			},
+			_formatRouteName: function(name) {
+				return name.split(' ').join("-");
+			},
+			_shipProfileUrl: function(data) {
+				var url = window.location.origin + '/spaceship-profile/';
+				data.forEach(function(ship){ ship.profileUrl = url + this._formatRouteName(ship.name); },this);
+				return data;
+			},
+			_setSessionStorage: function(data) {
+				data = JSON.stringify(data);
+				sessionStorage.setItem('spaceships', data);
+			},
+			_queryEmporiumData: function() {
+				this.$.emporiumEndpoint.generateRequest();
+			},
+			handleResponse: function(payload) {
+				var payload = payload.detail.__data__.response.products
+				this.spaceships = this._shipProfileUrl(payload);
+				this._setSessionStorage(this.spaceships);
+			},
+			handleError: function(err) {
+				console.log(error);
+			}
+		});
+	</script>
+</dom-module>

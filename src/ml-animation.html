@@ -1,12 +1,11 @@
-<link rel="import"
-      href="../bower_components/polymer/polymer.html">
-<link rel="import"
-      href="shared-styles.html">
-<dom-module id="animation-component">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="ml-shared-styles.html">
+<dom-module id="ml-animation">
 	<template>
 		<style include="shared-styles"></style>
 		<style>
 			.bg {
+				z-index: -1;
 				width: 100%;
 				height: 100%;
 				background: radial-gradient(rgba(50, 163, 173, 0.3), #1F1F39);
@@ -63,7 +62,7 @@
 	</template>
 	<script>
 		Polymer({
-			is: 'animation-component',
+			is: 'ml-animation',
 			properties: {
 				animationDivs: Array
 			},

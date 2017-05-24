@@ -1,0 +1,61 @@
+<link rel="import"
+      href="../bower_components/polymer/polymer.html">
+<link rel="import"
+      href="ml-shared-styles.html">
+<link rel="import"
+      href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="ml-spaceship-profile">
+	<style include="shared-styles">
+		.futurepanel {
+			z-index: 1;
+			position: absolute;
+			margin: auto;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			width: 95%;
+			height: 90%;
+			border-radius: 7px;
+		}
+
+		.heading {
+			text-align: center;
+		}
+	</style>
+	<template>
+		<div class="futurepanel">
+			<h1 class="heading">SpaceShip Profile</h1>
+			<div class="text-container">
+				<p>{{spaceship.name}}</p>
+			</div>
+		</div>
+	</template>
+	<script>
+		Polymer({
+			is: 'ml-spaceship-profile',
+			properties: {
+				spaceship: {
+					type: Object
+				},
+				activeProfile: {
+					type: Boolean
+				}
+			},
+			observers: [
+				'renderShipProfile(activeProfile)'
+			],
+			renderShipProfile: function(activeProfile) {
+				if (activeProfile) {
+					this.spaceship = this.retrieveFromSession().filter(function(ship) {
+						return ship.profileUrl === window.location.href;
+					})[0];
+				}
+			},
+			retrieveFromSession: function() {
+				return JSON.parse(sessionStorage.spaceships);
+			}
+		});
+	</script>
+</dom-module>
