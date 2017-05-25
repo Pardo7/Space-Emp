@@ -1,0 +1,51 @@
+<script>
+	//@polymerBehavior;
+	var Behaviors = Behaviors || {};
+	Behaviors.SpaceShipImagesBehavior = {
+		properties: {
+			shipImages: {
+				type: Array,
+			}
+		},
+		registered: function() {
+			this.presetShipImages();
+		},
+		presetShipImages: function() {
+				var shipImages = [
+					{
+						name: "Twin Ion Engine Starfighter",
+						url: 'http://www.rockpapershotgun.com/images/2011/09/tie-i_1.jpg'
+					},
+					{
+						name: "T-65 X-wing Starfighter",
+						url: 'http://th04.deviantart.net/fs71/PRE/i/2013/068/6/a/x_wing_blue_print_by_chaoshour-d5wn4fs.jpg'
+					},
+					{
+						name: "Y-wing Starfighter",
+						url: 'https://vignette3.wikia.nocookie.net/starwars/images/1/19/Y-wing_blueprints.png/revision/latest?cb=20160617232709'
+					},
+					{
+						name: "YT-1300 Light Freighter",
+						url: 'http://i.imgur.com/zKkDESC.jpg'
+					},
+					{
+						name: "Alpha-class Xg-1 Star Wing",
+						url: 'https://s-media-cache-ak0.pinimg.com/564x/d2/8b/f1/d28bf174cee5144ffb84a257720c55fe.jpg'
+					},
+					{
+						name: "Lambda-class T-4a shuttle",
+						url: 'http://www.figures.com/forums/attachment.php?attachmentid=7459&stc=1&d=1276784256'
+					},
+					{
+						name: "RZ-1 A-wing interceptor",
+						url: 'http://vignette2.wikia.nocookie.net/starwars/images/f/f2/RZ-1_blueprints.jpg/revision/latest?cb=20160617222431'
+					},
+					{
+						name: "B-wing heavy assault starfighter",
+						url: 'http://vignette2.wikia.nocookie.net/starwars/images/5/57/ASF-01_B-wing_starfighter_blueprints-sw_card_trader.png/revision/latest?cb=20160623023947'
+					}
+				]
+				this.shipImages = shipImages;
+			},
+	}
+</script>

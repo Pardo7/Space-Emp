@@ -4,31 +4,70 @@
       href="ml-shared-styles.html">
 <link rel="import"
       href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import"
+      href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+      href="../bower_components/iron-image/iron-image.html">
 
 <dom-module id="ml-spaceship-profile">
-	<style include="shared-styles">
-		.futurepanel {
-			z-index: 1;
-			position: absolute;
-			margin: auto;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			width: 95%;
-			height: 90%;
-			border-radius: 7px;
+	<style is="custom-style"
+	       include="iron-flex iron-flex-alignment shared-styles"></style>
+	<style>
+		.container {
+			height: 40em;
 		}
 
 		.heading {
+			text-align: left;
+		}
+
+		.text-block {
+			max-width: 45em;
 			text-align: center;
+		}
+
+		.futurebutton {
+			width: 7em;
+		}
+
+		.flex-equal-around-justified {
+			@apply(--layout-horizontal);
+			@apply(--layout-center);
+			@apply(--layout-around-justified);
+		}
+
+		iron-image {
+			margin-top: 3em;
+			margin-bottom: 2em;
 		}
 	</style>
 	<template>
-		<div class="futurepanel">
-			<h1 class="heading">SpaceShip Profile</h1>
-			<div class="text-container">
-				<p>{{spaceship.name}}</p>
+		<div class="container flex-equal-around-justified">
+			<div class="futurepanel">
+				<h1 class="heading">{{spaceship.name}}</h1>
+				<iron-image style="width:50em; height:25em;"
+				            src="{{spaceship.imgUrl}}"
+				            sizing="cover"></iron-image>
+				<p class="text-block">
+					"Beautiful {{spaceship.name}}. The pilot's chair was all worn in, I had the thrusters calibrated just how I like 'em…" "With
+					the laser cannons and the glass cockpit?" "And the fifteen-cylinder hyperdrive with overload protection. That was my
+					baby." ― Captain Ari Skyff and a fellow pilot
+				</p>
+			</div>
+
+			<div class="futurepanel">
+				<h1 class="heading">Tech Specs</h1>
+				<div class="futurepanel__body">
+					<p>Ship Length: {{spaceship.techspecs.length}}</p>
+					<p>Max Accel: {{spaceship.techspecs.maxaccel}}</p>
+					<p>MGLT: {{spaceship.techspecs.MGLT}}</p>
+					<p>Max Atmospheric Speed: {{spaceship.techspecs.maxatmosphericspeed}}</p>
+					<p>Sheilding: {{spaceship.techspecs.shielding}}</p>
+					<p>Hull: {{spaceship.techspecs.hull}}</p>
+					<p>Armament: {{spaceship.techspecs.armament}}</p>
+					<p>Communication: {{spaceship.techspecs.communications}}</p>
+					<button class="futurebutton">Buy</button>
+				</div>
 			</div>
 		</div>
 	</template>

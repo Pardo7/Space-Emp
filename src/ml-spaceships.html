@@ -4,12 +4,21 @@
       href="ml-shared-styles.html">
 <link rel="import"
       href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import"
+      href="../bower_components/iron-image/iron-image.html">
+<link rel="import"
+      href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import"
+      href="behaviors/ml-spaceship-images.html">
+<link rel="import"
+      href="../bower_components/paper-card/paper-card.html">
+<link rel="import"
+      href="../bower_components/iron-list/iron-list.html">
 
 <dom-module id="ml-spaceships">
-	<style include="shared-styles">
+	<style is="custom-style" include="iron-flex iron-flex-alignment shared-styles">
 		.futurepanel {
 			z-index: 1;
-			position: absolute;
 			margin: auto;
 			top: 0;
 			right: 0;
@@ -17,6 +26,8 @@
 			left: 0;
 			width: 95%;
 			height: 90%;
+			margin-top: 4em;
+			margin-bottom: 4em;
 			border-radius: 7px;
 		}
 
@@ -24,16 +35,24 @@
 			text-align: center;
 		}
 
-		p {
-			margin: 4em 5em 5em 5em;
+		.item-column {
+			-webkit-column-count: 2;
+			/* Chrome, Safari, Opera */
+			-moz-column-count: 2;
+			/* Firefox */
+			column-count: 2;
+			-webkit-column-gap: 40px;
+			/* Chrome, Safari, Opera */
+			-moz-column-gap: 40px;
+			/* Firefox */
+			column-gap: 40px;
+			margin-top: 2.5em;
+			text-align: center;
 		}
 
-		p:nth-child(odd) {
-			float: left;
-		}
-
-		p:nth-child(even) {
-			float: right;
+		iron-image {
+			width: 35em;
+			height: 20em;
 		}
 	</style>
 
@@ -47,11 +66,17 @@
 		           on-error="handleError">
 		</iron-ajax>
 		<div class="futurepanel">
-			<div class="circle">
-				<h1 class="heading">Watto's Space Emporium</h1>
+			<h1 class="heading">Watto's Space Emporium</h1>
+			<div class="item-column">
 				<template is="dom-repeat" items="{{spaceships}}">
-					<div class="text-container">
-						<a href$="{{item.profileUrl}}">{{item.name}}</a>
+
+					<div class="futurepanel__body">
+						<a href$="{{item.profileUrl}}">
+							<iron-image src="{{item.imgUrl}}" sizing="cover"></iron-image>
+						</a>
+						<div class="text-container">
+							<p>{{item.name}}</p>
+						</div>
 					</div>
 				</template>
 			</div>
@@ -60,6 +85,7 @@
 	<script>
 		Polymer({
 			is: 'ml-spaceships',
+			behaviors: [Behaviors.SpaceShipImagesBehavior],
 			properties: {
 				spaceships: {
 					type: Array,
@@ -73,8 +99,15 @@
 			},
 			_shipProfileUrl: function(data) {
 				var url = window.location.origin + '/spaceship-profile/';
-				data.forEach(function(ship){ ship.profileUrl = url + this._formatRouteName(ship.name); },this);
+				data.forEach(function(ship) {
+					ship.profileUrl = url + this._formatRouteName(ship.name);
+					ship.imgUrl = this._shipImageUrl(ship.name, this.shipImages);
+				}, this);
 				return data;
+			},
+			_shipImageUrl: function(name, images) {
+				result = images.filter(function(img) { return img.name === name })[0].url;
+				return result;
 			},
 			_setSessionStorage: function(data) {
 				data = JSON.stringify(data);
