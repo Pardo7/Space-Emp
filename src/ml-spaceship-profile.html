@@ -8,6 +8,8 @@
       href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import"
       href="../bower_components/iron-image/iron-image.html">
+<link rel="import"
+      href="../bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="ml-spaceship-profile">
 	<style is="custom-style"
@@ -41,7 +43,15 @@
 			margin-bottom: 2em;
 		}
 
-		.futurepanel {
+		.iconpanel {
+			margin: 2em 0em 2em 2em;
+		}
+
+		.futurepanel:nth-child(1) {
+			margin-right: 2em;
+		}
+
+		icon-icon .futurepanel {
 			-webkit-animation: slide-in-blurred-top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 			-moz-animation: slide-in-blurred-top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 			animation: slide-in-blurred-top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
@@ -91,7 +101,12 @@
 		}
 	</style>
 	<template>
-		<div class="container flex-equal-around-justified">
+		<a href$="{{home}}">
+			<div class="futurepanel iconpanel">
+				<iron-icon icon="icons:first-page"></iron-icon>
+			</div>
+		</a>
+		<div class="flex-equal-around-justified">
 			<div class="futurepanel">
 				<h1 class="heading">{{spaceship.name}}</h1>
 				<iron-image style="width:50em; height:25em;"
@@ -129,6 +144,12 @@
 				},
 				activeProfile: {
 					type: Boolean
+				},
+				home: {
+					type: String,
+					value: function() {
+						return window.location.origin;
+					}
 				}
 			},
 			observers: [
