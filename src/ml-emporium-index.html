@@ -1,3 +1,9 @@
+<!--Component: extend-auto-refresh-behavior.html
+	Author: Pardo
+	Purpose: index component containing all of the applications component imports,
+	in charge of handling routing, rendering other component views, and lazy loading our components.
+-->
+
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
@@ -71,18 +77,37 @@
 	<script>
 		Polymer({
 			is: 'ml-emporium-index',
-
+			/**
+			* A String property who's value will reference a particular component page to render
+			*
+			*
+			* @attribute page
+			* @type String
+			* @default page
+			*/
 			properties: {
 				page: {
 					type: String,
 					reflectToAttribute: true,
 					observer: '_pageChanged',
 				},
+			/**
+			 * A Boolean property who's value changes if the page property value resolves to the profile page.
+			 * If true, the profile page updates the ship profile data
+			 *
+			 * @attribute activeProfile
+			 * @type Boolean
+			 */
 				activeProfile: {
 					type: Boolean,
 				}
 			},
-
+			/**
+			* Observer property, watches the page route value and triggers the _routePageChanged function
+			* when the page value changes
+			*
+			* @type Polymer Observer
+			*/
 			observers: [
 				'_routePageChanged(routeData.page)'
 			],
@@ -90,7 +115,13 @@
 			_routePageChanged: function(page) {
 				this.page = page || 'spaceships';
 			},
-
+			/**
+			 * The '_pageChanged' method evaluates the current page property value, Lazy Loads and imports its related
+			 * view component
+			 *
+			 * @method _pageChanged
+			 * @private
+			 */
 			_pageChanged: function(page) {
 				// Load page import on demand. Show 404 page if fails
 				var resolvedPageUrl = this.resolveUrl('ml-' + page + '.html');

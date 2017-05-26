@@ -1,3 +1,10 @@
+<!--Component: ml-animation.html
+	Author: Pardo
+	Purpose: An animation component who's purpose is to create a space like start light effect within the application
+	background.
+-->
+
+
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="ml-shared-styles.html">
 <dom-module id="ml-animation">
@@ -63,36 +70,52 @@
 	<script>
 		Polymer({
 			is: 'ml-animation',
+			/**
+			 * An Array of objects containing calculated top and left values based on the browser
+			 * window width/height. These values will be used to dynamically
+			 * render the fading star effect within the application background.
+			 *
+			 * @attribute animationDivs
+			 * @type Array
+			 *
+			 */
 			properties: {
 				animationDivs: Array
 			},
 			ready: function() {
 				this._renderAnimation();
-				window.addEventListener("resize", function(event) {
+				window.addEventListener('resize', function(event) {
 					this._renderAnimation();
 				}.bind(this));
 			},
+			/**
+			 * The '_renderAnimation' private method generates top and left css px values that will
+			 * evenly render small divs across the application background to generate the fade animation.
+			 *
+			 * @method _renderAnimation
+			 * @public
+			 */
 			_renderAnimation: function() {
-				var result  = [];
+				var result = [];
 				var w = window.innerWidth;
 				var h = window.innerHeight;
 				var boxAmount = 10;
 
 				if (w > 1000) {
-					boxAmount += 10
+					boxAmount += 10;
 				} else if (w < 500) {
 					boxAmount -= 5;
 				}
 
 				for (var i = 0; i < boxAmount; i++) {
 					var animation = {top: num, left: num2};
-					var num = Math.random() * h + 1 + "px";
-					var num2 = Math.random() * w + 1 + "px";
+					var num = Math.random() * h + 1 + 'px';
+					var num2 = Math.random() * w + 1 + 'px';
 					result.push(animation);
 				}
 
 				this.animationDivs = result;
-			}
+			},
 		});
 	</script>
 </dom-module>

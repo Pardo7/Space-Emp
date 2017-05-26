@@ -1,15 +1,43 @@
+<!--Component: extend-auto-refresh-behavior.html
+	Author: Pardo
+	Purpose: ml-spaceship-images component is used as a polymer behavior in order to inject commonly used
+	functions & properties within other components that may require the same functionality.
+
+	In the case, it is used to preset spaceship profile image urls.
+-->
+
 <script>
-	//@polymerBehavior;
 	var Behaviors = Behaviors || {};
 	Behaviors.SpaceShipImagesBehavior = {
 		properties: {
+			/**
+			 * An Array property whose purpose store ship names and a url to an example image of the ship
+			 *
+			 * @attribute shipImages
+			 * @type Array
+			 */
 			shipImages: {
 				type: Array,
 			}
 		},
+		/**
+		 * The 'registered' method is a method provided by Polymer which is automatically called when
+		 * polymer detects that a component making use of this behavior has successfully loaded.
+		 *
+		 * @method parseLatestAutoRefStatus
+		 * @public
+		 */
 		registered: function() {
 			this.presetShipImages();
 		},
+		/**
+		 * The 'presetShipImages' method sets and pairs each ship name with a url to an image of the ship.
+		 * This is a helper method used to pair each ship with a profile image once a list of ships
+		 * is retrieved by our other components.
+		 *
+		 * @method presetShipImages
+		 * @public
+		 */
 		presetShipImages: function() {
 				var shipImages = [
 					{

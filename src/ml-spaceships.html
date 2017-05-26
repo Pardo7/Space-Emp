@@ -1,3 +1,10 @@
+<!--Component: extend-auto-refresh-behavior.html
+	Author: Pardo
+	Purpose: Our ml-spaceships polymer component is used to dynamically list and render all of Watto's Space Emporium
+	 spaceships available to purchase. It is also in charge of launching our API requests for Data,
+	 sets the session storage with the latest ship data, updating ship data with additional property values.
+-->
+
 <link rel="import"
       href="../bower_components/polymer/polymer.html">
 <link rel="import"
@@ -164,18 +171,47 @@
 	<script>
 		Polymer({
 			is: 'ml-spaceships',
+			/**
+			 * The Polymer behavior property injects within the host component commonly used functionality
+			 * known as behaviors for use across multiple components, in this case our SpaceShipImagesBehavior and
+			 * its function methods
+			 *
+			 * @attribute Behavior
+			 * @type Polymer Behavior
+			 */
 			behaviors: [Behaviors.SpaceShipImagesBehavior],
 			properties: {
+				/**
+				 * An array property whose purpose is to store all ship data retrieved from our API GET request.
+				 *
+				 * @attribute spaceships
+				 * @type Array
+				 * @default []
+				 */
 				spaceships: {
 					type: Array,
 					value: function() {
 						return [];
 					}
-				},
+				}
 			},
+			/**
+			 * The '_formatRouteName' method parses a ship name and returns a browser friendly formatted
+			 * version of the name for use as the url tail. (Alpha-class Xg-1 Star Wing --> /Alpha-class-Xg-1-Star-Wing)
+			 *
+			 * @method _formatRouteName
+			 * @private
+			 */
 			_formatRouteName: function(name) {
 				return name.split(' ').join("-");
 			},
+			/**
+			 * The '_shipProfileUrl' method ingests ship data and adds two additional properties to each ship value
+			 * a profile url, used for routing purposes, and an imgUrl, used to generate a profile image of each ship.
+			 *
+			 * @method _shipProfileUrl
+			 * @private
+			 */
 			_shipProfileUrl: function(data) {
 				var url = window.location.origin + '/spaceship-profile/';
 				data.forEach(function(ship) {
@@ -184,19 +220,47 @@
 				}, this);
 				return data;
 			},
+			/**
+			 * The '_shipImageUrl' method accepts two arguments (name, images), uses the spaceship name in order
+			 * to provide the related ship profile image url.
+			 *
+			 * @method _shipImageUrl
+			 * @private
+			 */
 			_shipImageUrl: function(name, images) {
 				result = images.filter(function(img) { return img.name === name })[0].url;
 				return result;
 			},
+			/**
+			 * The '_setSessionStorage' method updates the user session storage with the most up to date
+			 * spaceship data.
+			 *
+			 * @method _setSessionStorage
+			 * @private
+			 */
 			_setSessionStorage: function(data) {
 				data = JSON.stringify(data);
 				sessionStorage.setItem('spaceships', data);
 			},
+			/**
+			 * The '_queryEmporiumData' generates API GET request in order to retrieve all spaceship data
+			 * from Watto's Emporium Endpoint.
+			 *
+			 * @method _queryEmporiumData
+			 * @private
+			 */
 			_queryEmporiumData: function() {
 				this.$.emporiumEndpoint.generateRequest();
 			},
+			/**
+			 * The 'handleResponse' method handles a successful GET request response payload, and sets the spaceships
+			 * property value along with updating the session storage.
+			 *
+			 * @method handleResponse
+			 * @private
+			 */
 			handleResponse: function(payload) {
-				var payload = payload.detail.__data__.response.products
+				var payload = payload.detail.__data__.response.products;
 				this.spaceships = this._shipProfileUrl(payload);
 				this._setSessionStorage(this.spaceships);
 			},

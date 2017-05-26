@@ -139,12 +139,32 @@
 		Polymer({
 			is: 'ml-spaceship-profile',
 			properties: {
+				/**
+				 * A property whose purpose is to reference the profile page spaceship data.
+				 *
+				 *
+				 * @attribute spaceship
+				 * @type Object
+				 */
 				spaceship: {
 					type: Object
 				},
+				/**
+				 * The activeProperty is provided by the index page & updated by the index page when
+				 * the application route resolves to a profile page.
+				 *
+				 * @attribute activeProfile
+				 * @type Boolean
+				 */
 				activeProfile: {
 					type: Boolean
 				},
+				/**
+				 * A boolean property which automatically resolves to the window origin location. The home page.
+				 *
+				 * @attribute home
+				 * @type String
+				 */
 				home: {
 					type: String,
 					value: function() {
@@ -152,9 +172,23 @@
 					}
 				}
 			},
+			/**
+			 * Polymer observer in charge of watching changes to the activeProfile property value
+			 * @type Polymer Observer
+			 *
+			 */
 			observers: [
 				'renderShipProfile(activeProfile)'
 			],
+			/**
+			* The 'renderShipProfile' method is called if the activeProfile argument resolves to true.
+			* It retrieves the specific ship profile cached within the session based on the browser
+			* window location tail value.
+			* (www.starwars/spaceship-profile/-->Twin-Ion-Engine-Starfighter)
+			*
+			* @method renderShipProfile
+			* @public
+			*/
 			renderShipProfile: function(activeProfile) {
 				if (activeProfile) {
 					this.spaceship = this.retrieveFromSession().filter(function(ship) {
@@ -162,6 +196,13 @@
 					})[0];
 				}
 			},
+			/**
+			 * The 'retrieveFromSession' method retrieves ship data stored within the browser sessionStorage.
+			 *
+			 *
+			 * @method retrieveFromSession
+			 * @public
+			 */
 			retrieveFromSession: function() {
 				return JSON.parse(sessionStorage.spaceships);
 			}
