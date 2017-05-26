@@ -44,10 +44,10 @@ You're now ready to browse super awesome spaceships and wage an intergalactic wa
 1) Clone [Watto's Spaceship Emporium]() repo:
 
 ```bash
-git clone https://github/
+git clone https://github.com/Pardo7/mleap.git
 ```
 
-2) Use NPM, Bower to install Wattos Spaceship Emporium dependencies:
+2) Use NPM & Bower to install Wattos Spaceship Emporium dependencies:
 
 ```bash
 cd mleap
