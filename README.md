@@ -71,6 +71,9 @@ Files in this directory are available under the following URLs
 4) Open the application url referenced in your terminal output in your browser, and you'll see Wattos Spaceship Emporium manifest before your very eyes!
 
 
+Live App Deployed To Google Cloud : http://space-emporium.appspot.com/
+
+
 # Taking Watto's To Production
 ### Build
 
