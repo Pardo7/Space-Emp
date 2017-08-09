@@ -1,4 +1,4 @@
-# mleap
+# SpaceShip Emp
 
 Wattos SpaceShip Emporium is built using Googles Polymer.JS framework and Webcomponents.
 
